@@ -92,6 +92,71 @@ p, span, label, li, td, th, div {
 }
 
 /* ==========================================================================
+   Evaluator Mode (Debug / Judge Inspection Layer)
+   ========================================================================== */
+
+/* Cyber Toggle Switch */
+.cyber-switch {
+  width: 2.3rem !important;
+  height: 1.25rem !important;
+  background-color: #0b1426 !important;
+  border-color: #243555 !important;
+  cursor: pointer;
+  transition: all 0.25s ease !important;
+}
+
+.cyber-switch:checked {
+  background-color: var(--neon-cyan) !important;
+  border-color: var(--neon-cyan) !important;
+  box-shadow: 0 0 12px rgba(0, 242, 254, 0.75) !important;
+}
+
+.cyber-switch:focus {
+  box-shadow: 0 0 0 3px rgba(0, 242, 254, 0.25) !important;
+}
+
+/* Visibility Rules: Default OFF (evaluator-only hidden) */
+.evaluator-only {
+  display: none !important;
+}
+
+/* Active State (Evaluator Mode ON) */
+body.evaluator-mode-on .evaluator-only,
+.evaluator-mode-on .evaluator-only {
+  display: block !important;
+}
+
+body.evaluator-mode-on .row.evaluator-only,
+.evaluator-mode-on .row.evaluator-only,
+body.evaluator-mode-on .d-flex.evaluator-only,
+.evaluator-mode-on .d-flex.evaluator-only {
+  display: flex !important;
+}
+
+body.evaluator-mode-on span.evaluator-only,
+body.evaluator-mode-on a.evaluator-only,
+body.evaluator-mode-on .badge.evaluator-only,
+body.evaluator-mode-on button.evaluator-only,
+.evaluator-mode-on span.evaluator-only,
+.evaluator-mode-on a.evaluator-only,
+.evaluator-mode-on .badge.evaluator-only,
+.evaluator-mode-on button.evaluator-only {
+  display: inline-flex !important;
+}
+
+body.evaluator-mode-on th.evaluator-only,
+body.evaluator-mode-on td.evaluator-only,
+.evaluator-mode-on th.evaluator-only,
+.evaluator-mode-on td.evaluator-only {
+  display: table-cell !important;
+}
+
+body.evaluator-mode-on .evaluator-hidden,
+.evaluator-mode-on .evaluator-hidden {
+  display: none !important;
+}
+
+/* ==========================================================================
    Typography & Monospace Elements
    ========================================================================== */
 

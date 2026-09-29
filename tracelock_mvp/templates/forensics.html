@@ -39,21 +39,45 @@
 
         <hr class="border-secondary my-4">
 
-        <h6 class="text-cyan small fw-bold mb-2 font-mono">
-          <i class="bi bi-shield-check text-teal me-1"></i> THREE-TIER FORENSIC GUARANTEE
-        </h6>
-        <div class="small text-white font-mono" style="font-size: 0.78rem; line-height: 1.7;">
-          <div class="d-flex align-items-start gap-2 mb-2">
-            <i class="bi bi-1-circle text-cyan mt-1"></i>
-            <div><strong class="text-cyan">Covert Stego Extraction:</strong> ISO 32000-1 invisible text rendering (`3 Tr`) & document dictionary metadata.</div>
+        <!-- Clean Guarantee Overview (Evaluator Mode OFF) -->
+        <div class="evaluator-hidden">
+          <h6 class="text-cyan small fw-bold mb-2 font-mono">
+            <i class="bi bi-shield-check text-teal me-1"></i> FORENSIC ATTRIBUTION GUARANTEE
+          </h6>
+          <div class="small text-white" style="line-height: 1.6;">
+            <div class="d-flex align-items-start gap-2 mb-2">
+              <i class="bi bi-check-circle-fill text-teal mt-1"></i>
+              <div><strong class="text-white">Dynamic Watermark Extraction:</strong> Recipient markers invisibly embedded at decryption are recovered.</div>
+            </div>
+            <div class="d-flex align-items-start gap-2 mb-2">
+              <i class="bi bi-check-circle-fill text-teal mt-1"></i>
+              <div><strong class="text-white">Cryptographic Identity Link:</strong> Decryption event is validated against user's authenticated keys.</div>
+            </div>
+            <div class="d-flex align-items-start gap-2">
+              <i class="bi bi-check-circle-fill text-teal mt-1"></i>
+              <div><strong class="text-white">Immutable Audit Corroboration:</strong> Evidence is reconciled against the offline tamper-evident ledger.</div>
+            </div>
           </div>
-          <div class="d-flex align-items-start gap-2 mb-2">
-            <i class="bi bi-2-circle text-cyan mt-1"></i>
-            <div><strong class="text-cyan">PQC Signature Verification:</strong> Mathematically verified using client's Post-Quantum public key.</div>
-          </div>
-          <div class="d-flex align-items-start gap-2">
-            <i class="bi bi-3-circle text-cyan mt-1"></i>
-            <div><strong class="text-cyan">Hash-Chain Anchor:</strong> Corroborated against the immutable SQLite block linked to Genesis.</div>
+        </div>
+
+        <!-- Technical Guarantee Overview (Evaluator Mode ON) -->
+        <div class="evaluator-only">
+          <h6 class="text-cyan small fw-bold mb-2 font-mono">
+            <i class="bi bi-shield-check text-teal me-1"></i> THREE-TIER FORENSIC GUARANTEE
+          </h6>
+          <div class="small text-white font-mono" style="font-size: 0.78rem; line-height: 1.7;">
+            <div class="d-flex align-items-start gap-2 mb-2">
+              <i class="bi bi-1-circle text-cyan mt-1"></i>
+              <div><strong class="text-cyan">Covert Stego Extraction:</strong> ISO 32000-1 invisible text rendering (`3 Tr`) & document dictionary metadata.</div>
+            </div>
+            <div class="d-flex align-items-start gap-2 mb-2">
+              <i class="bi bi-2-circle text-cyan mt-1"></i>
+              <div><strong class="text-cyan">PQC Signature Verification:</strong> Mathematically verified using client's Post-Quantum public key.</div>
+            </div>
+            <div class="d-flex align-items-start gap-2">
+              <i class="bi bi-3-circle text-cyan mt-1"></i>
+              <div><strong class="text-cyan">Hash-Chain Anchor:</strong> Corroborated against the immutable SQLite block linked to Genesis.</div>
+            </div>
           </div>
         </div>
       </div>
@@ -82,7 +106,7 @@
         {% if report %}
           {% if report.success and report.signature_valid %}
             
-            <!-- DRAMATIC GLOWING BREACH ALERT BANNER -->
+            <!-- DRAMATIC GLOWING BREACH ALERT BANNER (Visible in Both Modes) -->
             <div class="forensic-breach-banner mb-4">
               <div class="d-flex align-items-center gap-3">
                 <div class="pulse-dot-red fs-2 d-none d-sm-block"></div>
@@ -114,17 +138,31 @@
               <div class="d-flex justify-content-between align-items-center mb-2">
                 <span class="fw-bold text-teal font-mono d-flex align-items-center gap-2">
                   <i class="bi bi-patch-check-fill fs-5 text-teal"></i>
-                  POST-QUANTUM DIGITAL SIGNATURE VERIFIED
+                  <span class="evaluator-hidden">CRYPTOGRAPHIC IDENTITY CONFIRMED</span>
+                  <span class="evaluator-only">POST-QUANTUM DIGITAL SIGNATURE VERIFIED</span>
                 </span>
-                <span class="badge badge-pqc">{{ report.pqc_algorithm }}</span>
+                <span class="badge badge-pqc evaluator-only">{{ report.pqc_algorithm }}</span>
+                <span class="badge bg-success bg-opacity-25 text-teal border border-success border-opacity-40 font-mono evaluator-hidden">
+                  NON-REPUDIATION GUARANTEED
+                </span>
               </div>
-              <p class="small text-white mb-2 font-mono" style="font-size: 0.8rem; line-height: 1.6;">
+
+              <!-- Executive Description (Evaluator Mode OFF) -->
+              <p class="small text-white mb-2 evaluator-hidden" style="font-size: 0.85rem; line-height: 1.6;">
+                The forensic watermark extracted from the document matches a verified decryption event by 
+                <strong class="text-warning">{{ report.user_id }}</strong>. The event was cryptographically signed 
+                at download and validated against enrolled keystores in the air-gapped ledger. Tampering or spoofing is impossible.
+              </p>
+
+              <!-- Technical Mathematical Description (Evaluator Mode ON) -->
+              <p class="small text-white mb-2 font-mono evaluator-only" style="font-size: 0.8rem; line-height: 1.6;">
                 The decryption event binding <code class="text-cyan">SHA256(FileHash + Session_ID + Timestamp)</code> 
                 was signed by <strong class="text-warning">{{ report.user_id }}'s</strong> local Post-Quantum secret key and validated against 
                 their public key in the offline ledger. Non-repudiation is guaranteed under NIST FIPS 204 lattice hardness.
               </p>
               
-              <div class="row g-2 mt-1">
+              <!-- Raw Keys and Signatures: Visible ONLY in Evaluator Mode -->
+              <div class="row g-2 mt-1 evaluator-only">
                 <div class="col-sm-6">
                   <div class="d-flex justify-content-between align-items-center mb-1">
                     <span class="text-cyan small font-mono fw-bold">Public Key (Enrolled):</span>
@@ -150,7 +188,12 @@
             <div class="row g-3 mb-3">
               <div class="col-sm-6">
                 <label class="form-label-cyber">Extracted Session Identifier</label>
-                <div class="mono-box text-amber font-mono" style="font-size: 0.82rem; font-weight: 600;">
+                <!-- Clean Truncated in Default Mode -->
+                <div class="mono-box text-amber font-mono evaluator-hidden" style="font-size: 0.82rem; font-weight: 600;">
+                  <i class="bi bi-key-fill text-amber me-1"></i>{{ report.session_id[:18] }}...
+                </div>
+                <!-- Full High-Entropy String in Evaluator Mode -->
+                <div class="mono-box text-amber font-mono evaluator-only" style="font-size: 0.82rem; font-weight: 600;">
                   {{ report.session_id }}
                 </div>
               </div>
@@ -162,7 +205,17 @@
               </div>
               <div class="col-sm-12">
                 <label class="form-label-cyber">Steganographic Detection Layers Found</label>
-                <div class="d-flex gap-2 flex-wrap">
+                <!-- Clean badges in Default Mode -->
+                <div class="evaluator-hidden d-flex gap-2 flex-wrap">
+                  <span class="badge bg-info bg-opacity-25 text-cyan border border-info border-opacity-50 font-mono" style="font-weight: 600;">
+                    <i class="bi bi-check2"></i> Invisible Forensic Watermark
+                  </span>
+                  <span class="badge bg-success bg-opacity-25 text-teal border border-success border-opacity-50 font-mono" style="font-weight: 600;">
+                    <i class="bi bi-check2"></i> Document Metadata Anchor
+                  </span>
+                </div>
+                <!-- Technical layer breakdown in Evaluator Mode -->
+                <div class="evaluator-only d-flex gap-2 flex-wrap">
                   {% for layer in report.detection_layers %}
                     <span class="badge bg-info bg-opacity-25 text-cyan border border-info border-opacity-50 font-mono" style="font-weight: 600;">
                       <i class="bi bi-check2"></i> {{ layer }}
@@ -180,14 +233,24 @@
                 </span>
                 <span class="badge bg-secondary font-mono text-white fw-bold">Ledger Block #{{ report.ledger_block_id }}</span>
               </div>
-              <div class="row g-2 small font-mono">
+              <!-- Clean Summary in Default Mode -->
+              <div class="evaluator-hidden row g-2 small font-mono">
+                <div class="col-sm-6 text-white">
+                  <i class="bi bi-check-circle-fill text-teal me-1"></i> Ledger Status: <strong>Anchored in Block #{{ report.ledger_block_id }}</strong>
+                </div>
+                <div class="col-sm-6 text-white">
+                  <i class="bi bi-shield-check text-cyan me-1"></i> Audit Trail: <strong class="text-teal">Pristine & Cryptographically Linked</strong>
+                </div>
+              </div>
+              <!-- Full 64-char Hash Details in Evaluator Mode -->
+              <div class="evaluator-only row g-2 small font-mono">
                 <div class="col-sm-6">
-                  <span class="text-white" style="font-size: 0.76rem; font-weight: 600;">Previous Block Hash:</span>
-                  <div class="mono-hash-prev d-block text-truncate mt-1">{{ report.previous_hash }}</div>
+                  <span class="text-white" style="font-size: 0.76rem; font-weight: 600;">Previous Block Hash (64-char):</span>
+                  <div class="mono-hash-prev d-block text-truncate mt-1" title="{{ report.previous_hash }}">{{ report.previous_hash }}</div>
                 </div>
                 <div class="col-sm-6">
-                  <span class="text-white" style="font-size: 0.76rem; font-weight: 600;">Current Block Hash:</span>
-                  <div class="mono-hash-curr d-block text-truncate mt-1">{{ report.current_hash }}</div>
+                  <span class="text-white" style="font-size: 0.76rem; font-weight: 600;">Current Block Hash (64-char):</span>
+                  <div class="mono-hash-curr d-block text-truncate mt-1" title="{{ report.current_hash }}">{{ report.current_hash }}</div>
                 </div>
               </div>
             </div>

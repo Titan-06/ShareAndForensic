@@ -9,6 +9,11 @@
   <link rel="stylesheet" href="{{ url_for('static', filename='css/bootstrap.min.css') }}">
   <link rel="stylesheet" href="{{ url_for('static', filename='css/bootstrap-icons.min.css') }}">
   <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}?v=2">
+  <script>
+    if (localStorage.getItem('tracelock_evaluator_mode') === 'true') {
+      document.documentElement.classList.add('evaluator-mode-on');
+    }
+  </script>
   {% block extra_head %}{% endblock %}
 </head>
 <body>
@@ -57,13 +62,27 @@
           {% endif %}
         </ul>
 
+        <!-- Evaluator Mode (Debug) Toggle Switch -->
+        <div class="d-flex align-items-center px-3 py-1 rounded border border-secondary border-opacity-40 me-lg-2" style="background: rgba(12, 20, 38, 0.85);">
+          <div class="form-check form-switch mb-0 d-flex align-items-center gap-2">
+            <input class="form-check-input cyber-switch" type="checkbox" role="switch" id="evaluatorModeToggle" onchange="toggleEvaluatorMode(this.checked)">
+            <label class="form-check-label font-mono text-cyan small fw-bold" for="evaluatorModeToggle" style="font-size: 0.78rem; cursor: pointer; user-select: none;">
+              <i class="bi bi-code-slash me-1"></i>Evaluator Mode (Debug)
+            </label>
+          </div>
+        </div>
+
         <!-- Cryptographic Telemetry & User Session Status -->
         <div class="d-flex align-items-center gap-2 flex-wrap">
           <span class="badge badge-airgap">
             <span class="pulse-dot-green"></span> AIR-GAPPED PERIMETER
           </span>
-          <span class="badge badge-pqc">
+          <!-- Simplified badge when OFF, full technical info when ON -->
+          <span class="badge badge-pqc evaluator-only">
             <i class="bi bi-cpu-fill"></i> PQC: {{ pqc_algorithm|default('ML-DSA-44') }}
+          </span>
+          <span class="badge bg-dark border border-info border-opacity-40 text-cyan font-mono evaluator-hidden" style="font-size: 0.74rem;">
+            <i class="bi bi-shield-check text-teal"></i> Quantum-Safe
           </span>
 
           {% if session.get('user') %}
@@ -113,11 +132,24 @@
   <!-- Tactical Footer -->
   <footer class="mt-auto py-3 border-top border-secondary border-opacity-25" style="background: rgba(8, 13, 24, 0.95);">
     <div class="container-fluid px-4 d-flex flex-wrap justify-content-between align-items-center text-white small font-mono" style="font-size: 0.78rem;">
-      <div>
-        <strong class="text-white">TRACELOCK</strong> &bull; <span class="text-cyan">Post-Quantum Traitor Tracing System</span> &bull; <span class="text-teal fw-bold">NIST FIPS 204 ML-DSA</span>
+      <!-- Clean Footer (Default / Evaluator Mode OFF) -->
+      <div class="evaluator-hidden w-100 d-flex flex-wrap justify-content-between align-items-center">
+        <div>
+          <strong class="text-white">TRACELOCK</strong> &bull; <span class="text-cyan">Zero-Trust Document Defense & Traitor Tracing System</span>
+        </div>
+        <div>
+          <span class="text-teal fw-bold"><i class="bi bi-shield-check me-1"></i>Active Operational Protection</span> &bull; <span class="text-white">Air-Gapped Local Perimeter</span>
+        </div>
       </div>
-      <div>
-        <span class="text-white">AES-256-GCM &bull; PyMuPDF ISO 32000-1 Watermarking &bull; SQLite3 Hash-Chain Ledger</span>
+
+      <!-- Technical Footer (Evaluator Mode ON) -->
+      <div class="evaluator-only w-100 d-flex flex-wrap justify-content-between align-items-center">
+        <div>
+          <strong class="text-white">TRACELOCK</strong> &bull; <span class="text-cyan">Post-Quantum Traitor Tracing System</span> &bull; <span class="text-teal fw-bold">NIST FIPS 204 ML-DSA</span>
+        </div>
+        <div>
+          <span class="text-white">AES-256-GCM &bull; PyMuPDF ISO 32000-1 Watermarking &bull; SQLite3 Hash-Chain Ledger</span>
+        </div>
       </div>
     </div>
   </footer>
@@ -137,6 +169,34 @@
         }, 1500);
       });
     }
+
+    // Evaluator Mode Toggle Management
+    function toggleEvaluatorMode(enabled) {
+      if (enabled) {
+        document.body.classList.add('evaluator-mode-on');
+        document.documentElement.classList.add('evaluator-mode-on');
+      } else {
+        document.body.classList.remove('evaluator-mode-on');
+        document.documentElement.classList.remove('evaluator-mode-on');
+      }
+      localStorage.setItem('tracelock_evaluator_mode', enabled ? 'true' : 'false');
+    }
+
+    // Sync toggle switch state on load (Default is OFF)
+    document.addEventListener('DOMContentLoaded', () => {
+      const isEnabled = localStorage.getItem('tracelock_evaluator_mode') === 'true';
+      if (isEnabled) {
+        document.body.classList.add('evaluator-mode-on');
+        document.documentElement.classList.add('evaluator-mode-on');
+      } else {
+        document.body.classList.remove('evaluator-mode-on');
+        document.documentElement.classList.remove('evaluator-mode-on');
+      }
+      const toggle = document.getElementById('evaluatorModeToggle');
+      if (toggle) {
+        toggle.checked = isEnabled;
+      }
+    });
   </script>
   {% block extra_scripts %}{% endblock %}
 </body>
