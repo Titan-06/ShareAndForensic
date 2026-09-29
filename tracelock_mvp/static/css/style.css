@@ -1,0 +1,608 @@
+/* ==========================================================================
+   TraceLock - High-End Cybersecurity / Defense Dark-Mode Design System
+   High-Contrast Legibility Specification: Zero Dim Grays, Crisp Bright Text
+   ========================================================================== */
+
+:root {
+  /* Color Palette - Deep Tactical Defense Theme */
+  --cyber-bg: #040711;
+  --cyber-bg-surface: #0a1020;
+  --cyber-bg-card: rgba(12, 19, 36, 0.95);
+  --cyber-bg-card-hover: rgba(16, 26, 48, 0.98);
+  --cyber-border: #223555;
+  --cyber-border-highlight: #00f2fe;
+  
+  /* Neon Accents */
+  --neon-cyan: #00f2fe;
+  --neon-teal: #00ffcc;
+  --neon-blue: #38bdf8;
+  --neon-emerald: #00e676;
+  --neon-purple: #c084fc;
+  --neon-amber: #fbbf24;
+  --neon-crimson: #ff0055;
+  --neon-red-glow: rgba(255, 0, 85, 0.5);
+  
+  /* Text - High Visibility & Contrast (Never Dim Grays) */
+  --text-primary: #ffffff;
+  --text-secondary: #f8fafc;
+  --text-muted: #f1f5f9;
+  --text-info-bright: #38bdf8;
+  --text-glow-cyan: 0 0 12px rgba(0, 242, 254, 0.6);
+  --text-glow-red: 0 0 14px rgba(255, 0, 85, 0.8);
+
+  /* Typography */
+  --font-sans: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  --font-mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Roboto Mono", "Fira Code", monospace;
+}
+
+/* Global Reset & Base */
+body {
+  background-color: var(--cyber-bg);
+  background-image: 
+    radial-gradient(circle at 15% 15%, rgba(0, 242, 254, 0.05) 0%, transparent 45%),
+    radial-gradient(circle at 85% 85%, rgba(192, 132, 252, 0.04) 0%, transparent 45%),
+    linear-gradient(rgba(255, 255, 255, 0.02) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.02) 1px, transparent 1px);
+  background-size: 100% 100%, 100% 100%, 32px 32px, 32px 32px;
+  color: #ffffff !important;
+  font-family: var(--font-sans);
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  overflow-x: hidden;
+}
+
+/* Ensure all generic paragraphs, spans, and labels are brilliant and readable */
+p, span, label, li, td, th, div {
+  color: #ffffff;
+}
+
+/* Override all Bootstrap muted and secondary grays with high-contrast text */
+.text-muted {
+  color: #f1f5f9 !important; /* Crisp bright white/off-white */
+}
+
+.text-secondary {
+  color: #ffffff !important;
+}
+
+.text-white-50 {
+  color: #f8fafc !important;
+}
+
+.small, small {
+  color: #f1f5f9 !important;
+  font-size: 0.85rem;
+}
+
+/* Scrollbar Customization */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+::-webkit-scrollbar-track {
+  background: #060a14;
+}
+::-webkit-scrollbar-thumb {
+  background: #223555;
+  border-radius: 4px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: var(--neon-cyan);
+}
+
+/* ==========================================================================
+   Typography & Monospace Elements
+   ========================================================================== */
+
+.font-mono {
+  font-family: var(--font-mono) !important;
+}
+
+.text-cyan {
+  color: var(--neon-cyan) !important;
+}
+
+.text-teal {
+  color: var(--neon-teal) !important;
+}
+
+.text-amber {
+  color: var(--neon-amber) !important;
+}
+
+.mono-hash {
+  font-family: var(--font-mono);
+  font-size: 0.82rem;
+  letter-spacing: -0.2px;
+  color: var(--neon-cyan) !important;
+  background: rgba(0, 242, 254, 0.12);
+  border: 1px solid rgba(0, 242, 254, 0.4);
+  padding: 0.25rem 0.55rem;
+  border-radius: 5px;
+  display: inline-flex;
+  align-items: center;
+  font-weight: 600;
+  gap: 0.35rem;
+}
+
+.mono-hash-prev {
+  font-family: var(--font-mono);
+  font-size: 0.82rem;
+  letter-spacing: -0.2px;
+  color: #60a5fa !important; /* High-contrast vivid blue */
+  background: rgba(96, 165, 250, 0.14);
+  border: 1px solid rgba(96, 165, 250, 0.45);
+  padding: 0.25rem 0.55rem;
+  border-radius: 5px;
+  display: inline-flex;
+  align-items: center;
+  font-weight: 600;
+}
+
+.mono-hash-curr {
+  font-family: var(--font-mono);
+  font-size: 0.82rem;
+  letter-spacing: -0.2px;
+  color: var(--neon-teal) !important; /* High-contrast vivid teal */
+  background: rgba(0, 255, 204, 0.14);
+  border: 1px solid rgba(0, 255, 204, 0.45);
+  padding: 0.25rem 0.55rem;
+  border-radius: 5px;
+  display: inline-flex;
+  align-items: center;
+  font-weight: 600;
+}
+
+.mono-box {
+  font-family: var(--font-mono);
+  font-size: 0.84rem;
+  background: #080e1c;
+  border: 1px solid #243555;
+  border-radius: 6px;
+  padding: 0.65rem 0.9rem;
+  color: #ffffff !important;
+  word-break: break-all;
+  box-shadow: inset 0 2px 6px rgba(0, 0, 0, 0.6);
+  font-weight: 500;
+}
+
+/* ==========================================================================
+   Navigation Bar & Brand
+   ========================================================================== */
+
+.navbar-cyber {
+  background: rgba(8, 14, 26, 0.97);
+  backdrop-filter: blur(16px);
+  border-bottom: 1px solid #223555;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.6);
+}
+
+.brand-text {
+  font-family: var(--font-sans);
+  font-weight: 800;
+  letter-spacing: 1.5px;
+  color: #ffffff !important;
+  text-shadow: 0 0 12px rgba(0, 242, 254, 0.5);
+}
+
+.nav-link-cyber {
+  color: #ffffff !important;
+  font-weight: 600;
+  font-size: 0.92rem;
+  padding: 0.5rem 0.95rem;
+  border-radius: 6px;
+  border: 1px solid transparent;
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.nav-link-cyber:hover {
+  color: var(--neon-cyan) !important;
+  background: rgba(0, 242, 254, 0.14);
+  border-color: rgba(0, 242, 254, 0.35);
+}
+
+.nav-link-cyber.active {
+  color: #040812 !important;
+  background: linear-gradient(135deg, var(--neon-cyan) 0%, #38bdf8 100%);
+  font-weight: 700;
+  box-shadow: 0 2px 12px rgba(0, 242, 254, 0.45);
+}
+
+/* ==========================================================================
+   Cyber Cards & Containers
+   ========================================================================== */
+
+.card-cyber {
+  background: var(--cyber-bg-card);
+  backdrop-filter: blur(14px);
+  border: 1px solid var(--cyber-border);
+  border-radius: 12px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.55);
+  transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+  position: relative;
+  overflow: hidden;
+}
+
+.card-cyber::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: linear-gradient(90deg, transparent, var(--neon-cyan), transparent);
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.card-cyber:hover {
+  border-color: rgba(0, 242, 254, 0.5);
+  box-shadow: 0 14px 40px rgba(0, 0, 0, 0.7), 0 0 20px rgba(0, 242, 254, 0.18);
+  transform: translateY(-2px);
+}
+
+.card-cyber:hover::before {
+  opacity: 1;
+}
+
+.card-header-cyber {
+  background: rgba(14, 24, 46, 0.85);
+  border-bottom: 1px solid var(--cyber-border);
+  padding: 1rem 1.35rem;
+  border-top-left-radius: 12px !important;
+  border-top-right-radius: 12px !important;
+}
+
+.metric-title {
+  color: var(--neon-cyan) !important;
+  font-family: var(--font-mono);
+  font-size: 0.82rem;
+  font-weight: 700;
+  letter-spacing: 0.8px;
+  text-transform: uppercase;
+}
+
+/* ==========================================================================
+   Tactical Badges & Pulse Indicators
+   ========================================================================== */
+
+.badge-pqc {
+  background: linear-gradient(135deg, #7928ca 0%, #a855f7 100%);
+  color: #ffffff !important;
+  font-weight: 700;
+  font-size: 0.76rem;
+  padding: 0.35rem 0.7rem;
+  border-radius: 20px;
+  letter-spacing: 0.4px;
+  box-shadow: 0 0 14px rgba(121, 40, 202, 0.5);
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3rem;
+}
+
+.badge-airgap {
+  background: linear-gradient(135deg, #059669 0%, #10b981 100%);
+  color: #ffffff !important;
+  font-weight: 700;
+  font-size: 0.76rem;
+  padding: 0.35rem 0.7rem;
+  border-radius: 20px;
+  box-shadow: 0 0 14px rgba(16, 185, 129, 0.45);
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+}
+
+.badge-role {
+  font-family: var(--font-mono);
+  font-size: 0.78rem;
+  text-transform: uppercase;
+  padding: 0.35rem 0.65rem;
+  border-radius: 4px;
+  font-weight: 700;
+}
+
+.badge-role-admin {
+  background: rgba(192, 132, 252, 0.2);
+  color: #e9d5ff !important;
+  border: 1px solid rgba(192, 132, 252, 0.6);
+}
+
+.badge-role-client {
+  background: rgba(0, 242, 254, 0.16);
+  color: #cffafe !important;
+  border: 1px solid rgba(0, 242, 254, 0.5);
+}
+
+.pulse-dot-green {
+  width: 10px;
+  height: 10px;
+  background-color: var(--neon-emerald);
+  border-radius: 50%;
+  display: inline-block;
+  box-shadow: 0 0 0 0 rgba(0, 230, 118, 0.8);
+  animation: pulse-green 2s infinite;
+}
+
+@keyframes pulse-green {
+  0% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(0, 230, 118, 0.8); }
+  70% { transform: scale(1.05); box-shadow: 0 0 0 8px rgba(0, 230, 118, 0); }
+  100% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(0, 230, 118, 0); }
+}
+
+.pulse-dot-red {
+  width: 12px;
+  height: 12px;
+  background-color: var(--neon-crimson);
+  border-radius: 50%;
+  display: inline-block;
+  box-shadow: 0 0 0 0 rgba(255, 0, 85, 0.9);
+  animation: pulse-red 1.5s infinite;
+}
+
+@keyframes pulse-red {
+  0% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(255, 0, 85, 0.9); }
+  70% { transform: scale(1.15); box-shadow: 0 0 0 12px rgba(255, 0, 85, 0); }
+  100% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(255, 0, 85, 0); }
+}
+
+/* ==========================================================================
+   Cyber Tables - High Contrast & Vibrant Headers
+   ========================================================================== */
+
+.table-cyber {
+  color: #ffffff !important;
+  border-color: #223555;
+  vertical-align: middle;
+  font-size: 0.9rem;
+}
+
+.table-cyber th {
+  background: #0c152a !important;
+  color: var(--neon-cyan) !important; /* High-contrast glowing cyan header */
+  font-weight: 700;
+  font-size: 0.82rem;
+  text-transform: uppercase;
+  letter-spacing: 0.9px;
+  border-bottom: 2px solid #223555;
+  padding: 0.9rem 1rem;
+}
+
+.table-cyber td {
+  background: transparent;
+  color: #ffffff !important;
+  border-bottom: 1px solid rgba(34, 53, 85, 0.7);
+  padding: 0.9rem 1rem;
+}
+
+.table-cyber tr:hover td {
+  background: rgba(0, 242, 254, 0.05);
+}
+
+.hash-chain-connector {
+  color: var(--neon-cyan) !important;
+  font-size: 0.95rem;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 20px;
+}
+
+/* Ledger Table Specific Typography - High Contrast Vibrant Colors */
+.ledger-subheading {
+  color: #e0f2fe !important; /* Brilliant crisp sky-white */
+  font-family: var(--font-mono);
+  font-size: 0.82rem;
+  letter-spacing: 0.3px;
+  font-weight: 500;
+}
+
+.ledger-timestamp {
+  color: #38bdf8 !important; /* Bright sky blue - highly legible */
+  font-family: var(--font-mono);
+  font-size: 0.85rem;
+  font-weight: 600;
+}
+
+/* ==========================================================================
+   Forms & Controls
+   ========================================================================== */
+
+.form-control-cyber {
+  background-color: #080d1a !important;
+  border: 1px solid #243555 !important;
+  color: #ffffff !important;
+  border-radius: 8px !important;
+  padding: 0.7rem 0.95rem !important;
+  font-size: 0.92rem !important;
+  font-weight: 500 !important;
+  transition: all 0.2s ease !important;
+}
+
+.form-control-cyber:focus {
+  background-color: #0b1224 !important;
+  border-color: var(--neon-cyan) !important;
+  box-shadow: 0 0 0 3px rgba(0, 242, 254, 0.25) !important;
+  color: #ffffff !important;
+}
+
+.form-label-cyber {
+  color: var(--neon-cyan) !important; /* High-contrast vibrant label */
+  font-size: 0.84rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.6px;
+  margin-bottom: 0.45rem;
+}
+
+/* ==========================================================================
+   Buttons
+   ========================================================================== */
+
+.btn-cyan {
+  background: linear-gradient(135deg, var(--neon-cyan) 0%, #38bdf8 100%);
+  color: #040812 !important;
+  font-weight: 700;
+  border: none;
+  box-shadow: 0 4px 15px rgba(0, 242, 254, 0.35);
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.btn-cyan:hover {
+  background: linear-gradient(135deg, #38f9d7 0%, #38bdf8 100%);
+  color: #000000 !important;
+  box-shadow: 0 6px 24px rgba(0, 242, 254, 0.55);
+  transform: translateY(-1px);
+}
+
+.btn-purple {
+  background: linear-gradient(135deg, #7928ca 0%, #a855f7 100%);
+  color: #ffffff !important;
+  font-weight: 700;
+  border: none;
+  box-shadow: 0 4px 15px rgba(121, 40, 202, 0.45);
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.btn-purple:hover {
+  color: #ffffff !important;
+  box-shadow: 0 6px 22px rgba(168, 85, 247, 0.6);
+  transform: translateY(-1px);
+}
+
+.btn-danger-cyber {
+  background: linear-gradient(135deg, #e11d48 0%, #ff0055 100%);
+  color: #ffffff !important;
+  font-weight: 700;
+  border: none;
+  box-shadow: 0 4px 15px rgba(255, 0, 85, 0.45);
+}
+
+.btn-danger-cyber:hover {
+  color: #ffffff !important;
+  box-shadow: 0 6px 22px rgba(255, 0, 85, 0.65);
+  transform: translateY(-1px);
+}
+
+.btn-copy {
+  cursor: pointer;
+  padding: 0.2rem 0.5rem;
+  font-size: 0.74rem;
+  border-radius: 4px;
+  background: #10192e;
+  border: 1px solid #2a3d60;
+  color: #ffffff !important;
+  font-family: var(--font-mono);
+  font-weight: 600;
+  transition: all 0.15s ease;
+}
+
+.btn-copy:hover {
+  background: #1c2b4d;
+  color: var(--neon-cyan) !important;
+  border-color: var(--neon-cyan);
+}
+
+/* ==========================================================================
+   Forensic Breach Alert Banner (Glowing Dramatic Effect)
+   ========================================================================== */
+
+.forensic-breach-banner {
+  background: linear-gradient(135deg, rgba(255, 0, 85, 0.22) 0%, rgba(225, 29, 72, 0.12) 100%);
+  border: 2px solid var(--neon-crimson);
+  border-radius: 12px;
+  padding: 1.8rem;
+  box-shadow: 0 0 35px var(--neon-red-glow), inset 0 0 25px rgba(255, 0, 85, 0.2);
+  position: relative;
+  overflow: hidden;
+  animation: breach-pulse 3s infinite ease-in-out;
+}
+
+@keyframes breach-pulse {
+  0% { box-shadow: 0 0 25px rgba(255, 0, 85, 0.4); }
+  50% { box-shadow: 0 0 50px rgba(255, 0, 85, 0.75), inset 0 0 35px rgba(255, 0, 85, 0.3); }
+  100% { box-shadow: 0 0 25px rgba(255, 0, 85, 0.4); }
+}
+
+.breach-tag {
+  display: inline-block;
+  background: var(--neon-crimson);
+  color: #ffffff !important;
+  font-family: var(--font-mono);
+  font-weight: 800;
+  font-size: 0.85rem;
+  letter-spacing: 1.5px;
+  padding: 0.35rem 0.85rem;
+  border-radius: 4px;
+  box-shadow: 0 0 16px rgba(255, 0, 85, 0.85);
+}
+
+.breach-culprit-name {
+  font-size: 2.3rem;
+  font-weight: 900;
+  color: #fbbf24 !important; /* Bright gold/amber */
+  text-shadow: 0 0 18px rgba(251, 191, 36, 0.75);
+  letter-spacing: 1.5px;
+}
+
+.cryptographic-seal {
+  background: rgba(0, 230, 118, 0.12);
+  border: 1px solid rgba(0, 230, 118, 0.5);
+  border-radius: 8px;
+  padding: 1.1rem 1.35rem;
+  box-shadow: 0 0 18px rgba(0, 230, 118, 0.2);
+}
+
+/* ==========================================================================
+   Login Terminal Interface
+   ========================================================================== */
+
+.login-container {
+  max-width: 490px;
+  margin: 3.5rem auto;
+}
+
+.login-header-terminal {
+  background: #0a1122;
+  border-bottom: 1px solid var(--cyber-border);
+  padding: 1rem 1.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-top-left-radius: 12px;
+  border-top-right-radius: 12px;
+}
+
+.terminal-dots {
+  display: flex;
+  gap: 6px;
+}
+
+.terminal-dot {
+  width: 11px;
+  height: 11px;
+  border-radius: 50%;
+}
+.dot-red { background: #ef4444; }
+.dot-yellow { background: #f59e0b; }
+.dot-green { background: #10b981; }
+
+.quick-auth-btn {
+  background: #0c152a;
+  border: 1px solid #223555;
+  color: #ffffff !important;
+  font-family: var(--font-mono);
+  font-size: 0.84rem;
+  padding: 0.6rem 0.9rem;
+  border-radius: 6px;
+  text-align: left;
+  transition: all 0.2s ease;
+  width: 100%;
+}
+
+.quick-auth-btn:hover {
+  background: #142240;
+  border-color: var(--neon-cyan);
+  color: var(--neon-cyan) !important;
+}

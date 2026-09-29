@@ -1,0 +1,193 @@
+{% extends "base.html" %}
+
+{% block title %}Client Terminal (Alice) - TraceLock{% endblock %}
+
+{% block content %}
+<div class="row g-4 mb-4">
+  <!-- Alice's Cryptographic Keystore Identity Card -->
+  <div class="col-lg-5">
+    <div class="card card-cyber h-100">
+      <div class="card-header card-header-cyber d-flex justify-content-between align-items-center">
+        <h5 class="mb-0 text-white fs-6 fw-bold">
+          <i class="bi bi-person-badge-fill text-cyan me-2"></i>Client Keystore & Identity
+        </h5>
+        <span class="badge bg-success bg-opacity-25 text-teal border border-success border-opacity-50 font-mono" style="font-size: 0.74rem;">
+          <i class="bi bi-shield-check"></i> KEYSTORE MOUNTED
+        </span>
+      </div>
+      <div class="card-body">
+        <div class="d-flex align-items-center gap-3 mb-3 p-3 rounded border border-secondary border-opacity-35 bg-dark">
+          <div class="bg-primary bg-opacity-20 p-3 rounded-circle text-cyan fs-3 border border-info border-opacity-40">
+            <i class="bi bi-person-circle"></i>
+          </div>
+          <div>
+            <h5 class="text-white mb-1 fw-bold">{{ session.get('user', 'Alice')|title }}</h5>
+            <span class="badge badge-role badge-role-client me-1">Authorized Client</span>
+            <span class="badge bg-dark border border-secondary text-cyan font-mono" style="font-size: 0.74rem; font-weight: 600;">Clearance: Secret</span>
+          </div>
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label-cyber">Post-Quantum Signature Algorithm</label>
+          <div class="d-flex align-items-center gap-2">
+            <span class="badge badge-pqc">{{ pqc_algorithm }}</span>
+            <span class="text-white font-mono small" style="font-size: 0.8rem; font-weight: 600;">(NIST FIPS 204 Lattice ML-DSA)</span>
+          </div>
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label-cyber">Local Private Keystore Path</label>
+          <div class="mono-box text-white small d-flex align-items-center gap-2">
+            <i class="bi bi-file-earmark-lock-fill text-warning fs-6"></i>
+            <span class="text-white font-mono">keystore/alice_pqc.key &bull; (2,560 bytes private key)</span>
+          </div>
+        </div>
+
+        <div class="mb-3">
+          <div class="d-flex justify-content-between align-items-center mb-1">
+            <label class="form-label-cyber mb-0">Public Key Fingerprint (Registry)</label>
+            <button class="btn-copy" onclick="copyToClipboard('{{ alice_public_key }}', this)">copy</button>
+          </div>
+          <div class="mono-box text-cyan font-mono" style="font-size: 0.76rem; max-height: 75px; overflow-y: auto;">
+            {{ alice_public_key }}
+          </div>
+        </div>
+
+        <div class="p-3 rounded border border-info border-opacity-30 bg-info bg-opacity-10 small text-white font-mono" style="font-size: 0.8rem; line-height: 1.6;">
+          <i class="bi bi-shield-exclamation text-cyan me-1"></i>
+          <strong class="text-cyan">Zero-Trust Contract:</strong> Decryption requires Alice's local private key to sign a 
+          cryptographic claim permanently linking her identity to the dynamic invisible watermark and SQLite ledger.
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- The Decryption Loop Architecture Workflow -->
+  <div class="col-lg-7">
+    <div class="card card-cyber h-100">
+      <div class="card-header card-header-cyber d-flex justify-content-between align-items-center">
+        <h5 class="mb-0 text-white fs-6 fw-bold">
+          <i class="bi bi-arrow-repeat text-cyan me-2"></i>The 6-Step Traitor-Tracing Decryption Loop
+        </h5>
+        <span class="badge bg-dark text-cyan border border-info border-opacity-40 font-mono" style="font-size: 0.74rem;">
+          ATOMIC PROTOCOL
+        </span>
+      </div>
+      <div class="card-body">
+        <p class="text-white small mb-3">
+          To prevent unauthorized broadcast redistribution, document access is cryptographically bound
+          to the recipient at the precise instant of decryption:
+        </p>
+
+        <div class="list-group list-group-flush gap-2 bg-transparent font-mono" style="font-size: 0.82rem;">
+          <div class="list-group-item bg-dark bg-opacity-60 text-white border border-secondary border-opacity-35 rounded p-2 d-flex align-items-start gap-2">
+            <span class="badge bg-secondary font-mono text-white fw-bold">1</span>
+            <div>
+              <strong class="text-cyan">AES-256-GCM Decryption:</strong> 
+              Ciphertext payload is fetched from the local vault and decrypted using the broadcast master key.
+            </div>
+          </div>
+
+          <div class="list-group-item bg-dark bg-opacity-60 text-white border border-secondary border-opacity-35 rounded p-2 d-flex align-items-start gap-2">
+            <span class="badge bg-secondary font-mono text-white fw-bold">2</span>
+            <div>
+              <strong class="text-cyan">Unique Session_ID Minting:</strong> 
+              High-entropy session identifier is generated: <code class="text-amber">TL-SESS-&lt;UUID&gt;-ALICE-&lt;TIMESTAMP&gt;</code>.
+            </div>
+          </div>
+
+          <div class="list-group-item bg-dark bg-opacity-60 text-white border border-secondary border-opacity-35 rounded p-2 d-flex align-items-start gap-2">
+            <span class="badge bg-secondary font-mono text-white fw-bold">3</span>
+            <div>
+              <strong class="text-cyan">PyMuPDF Steganographic Watermarking:</strong> 
+              Session ID is injected into the PDF as 0% opacity text (ISO 32000-1 <code class="text-teal">render_mode=3</code>) & metadata dictionary.
+            </div>
+          </div>
+
+          <div class="list-group-item bg-dark bg-opacity-60 text-white border border-secondary border-opacity-35 rounded p-2 d-flex align-items-start gap-2">
+            <span class="badge bg-secondary font-mono text-white fw-bold">4</span>
+            <div>
+              <strong class="text-cyan">Post-Quantum ML-DSA Signature:</strong> 
+              Alice's local private key signs <code class="text-purple">SHA-256(FileHash + Session_ID + Timestamp)</code>.
+            </div>
+          </div>
+
+          <div class="list-group-item bg-dark bg-opacity-60 text-white border border-secondary border-opacity-35 rounded p-2 d-flex align-items-start gap-2">
+            <span class="badge bg-secondary font-mono text-white fw-bold">5</span>
+            <div>
+              <strong class="text-cyan">Immutable Ledger Append:</strong> 
+              The decryption event is recorded into the SQLite hash-chain, linked to the previous block hash.
+            </div>
+          </div>
+
+          <div class="list-group-item bg-dark bg-opacity-60 text-white border border-secondary border-opacity-35 rounded p-2 d-flex align-items-start gap-2">
+            <span class="badge bg-secondary font-mono text-white fw-bold">6</span>
+            <div>
+              <strong class="text-cyan">Pristine Document Delivery:</strong> 
+              The watermarked PDF is delivered. Visually pristine, but forensically bound forever!
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Section: Available Broadcast Documents to Decrypt -->
+<div class="card card-cyber mb-4">
+  <div class="card-header card-header-cyber d-flex justify-content-between align-items-center">
+    <h5 class="mb-0 text-white fs-6 fw-bold">
+      <i class="bi bi-folder-symlink-fill text-warning me-2"></i>Available Encrypted Broadcast Documents
+    </h5>
+    <span class="badge bg-secondary font-mono text-white" style="font-size: 0.74rem; font-weight: 600;">CLEARANCE LEVEL: SECRET</span>
+  </div>
+  <div class="card-body p-0">
+    <div class="table-responsive">
+      <table class="table table-cyber mb-0">
+        <thead>
+          <tr>
+            <th>Document Name</th>
+            <th>Vault Identifier</th>
+            <th>Original SHA-256 Hash</th>
+            <th>Size</th>
+            <th>Broadcast Date</th>
+            <th>Decryption Action</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for doc in documents %}
+          <tr>
+            <td>
+              <div class="fw-bold text-white small">
+                <i class="bi bi-file-earmark-pdf-fill text-danger me-1"></i> {{ doc.original_filename }}
+              </div>
+            </td>
+            <td>
+              <span class="mono-hash">{{ doc.doc_id[:10] }}...</span>
+            </td>
+            <td>
+              <span class="mono-hash" title="{{ doc.file_hash }}">{{ doc.file_hash[:12] }}...</span>
+              <button class="btn-copy ms-1" onclick="copyToClipboard('{{ doc.file_hash }}', this)">copy</button>
+            </td>
+            <td class="small text-white font-mono fw-semibold">{{ (doc.file_size / 1024)|round(1) }} KB</td>
+            <td class="small text-cyan font-mono fw-semibold">{{ doc.uploaded_at[:19] }}</td>
+            <td>
+              <!-- The Core Decryption Action -->
+              <a href="{{ url_for('decrypt_document', doc_id=doc.doc_id) }}" class="btn btn-cyan btn-sm d-inline-flex align-items-center gap-1 font-mono shadow-sm">
+                <i class="bi bi-unlock-fill"></i> Decrypt & Download
+              </a>
+            </td>
+          </tr>
+          {% else %}
+          <tr>
+            <td colspan="6" class="text-center py-4 text-white font-mono fw-bold">
+              No documents available in vault. Visit the <strong><a href="{{ url_for('admin_dashboard') }}" class="text-cyan">Admin Dashboard</a></strong> to broadcast a document first!
+            </td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+{% endblock %}

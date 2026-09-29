@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>{% block title %}TraceLock - Air-Gapped Post-Quantum Traitor Tracing{% endblock %}</title>
+  
+  <!-- Local Static Assets for Air-Gapped Zero-Dependency Execution -->
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/bootstrap.min.css') }}">
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/bootstrap-icons.min.css') }}">
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}?v=2">
+  {% block extra_head %}{% endblock %}
+</head>
+<body>
+
+  <!-- Top Tactical Navigation Bar -->
+  <nav class="navbar navbar-expand-lg navbar-dark navbar-cyber sticky-top">
+    <div class="container-fluid px-4">
+      <a class="navbar-brand d-flex align-items-center gap-2" href="{% if session.get('role') == 'admin' %}{{ url_for('admin_dashboard') }}{% elif session.get('role') == 'client' %}{{ url_for('client_dashboard') }}{% else %}{{ url_for('login') }}{% endif %}">
+        <span class="fs-4">🛡️</span>
+        <div>
+          <span class="brand-text">TRACELOCK</span>
+          <span class="badge bg-secondary ms-1 font-mono" style="font-size: 0.62rem; letter-spacing: 0.5px;">ZERO-TRUST</span>
+        </div>
+      </a>
+
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarTraceLock">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+
+      <div class="collapse navbar-collapse" id="navbarTraceLock">
+        <ul class="navbar-nav me-auto mb-2 mb-lg-0 ms-lg-3 gap-1">
+          {% if session.get('user') %}
+            {% if session.get('role') == 'admin' %}
+              <li class="nav-item">
+                <a class="nav-link nav-link-cyber {% if request.endpoint == 'admin_dashboard' %}active{% endif %}" href="{{ url_for('admin_dashboard') }}">
+                  <i class="bi bi-shield-lock-fill me-1"></i> Admin Broadcast & Ledger
+                </a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link nav-link-cyber {% if request.endpoint == 'forensics_page' %}active{% endif %}" href="{{ url_for('forensics_page') }}">
+                  <i class="bi bi-search me-1"></i> Forensic Extractor
+                </a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link nav-link-cyber {% if request.endpoint == 'client_dashboard' %}active{% endif %}" href="{{ url_for('client_dashboard') }}">
+                  <i class="bi bi-person-badge-fill me-1"></i> Client Terminal (Preview)
+                </a>
+              </li>
+            {% elif session.get('role') == 'client' %}
+              <li class="nav-item">
+                <a class="nav-link nav-link-cyber {% if request.endpoint == 'client_dashboard' %}active{% endif %}" href="{{ url_for('client_dashboard') }}">
+                  <i class="bi bi-person-badge-fill me-1"></i> Client Terminal (Alice)
+                </a>
+              </li>
+            {% endif %}
+          {% endif %}
+        </ul>
+
+        <!-- Cryptographic Telemetry & User Session Status -->
+        <div class="d-flex align-items-center gap-2 flex-wrap">
+          <span class="badge badge-airgap">
+            <span class="pulse-dot-green"></span> AIR-GAPPED PERIMETER
+          </span>
+          <span class="badge badge-pqc">
+            <i class="bi bi-cpu-fill"></i> PQC: {{ pqc_algorithm|default('ML-DSA-44') }}
+          </span>
+
+          {% if session.get('user') %}
+            <!-- Authenticated Identity & Logout -->
+            <div class="d-flex align-items-center gap-2 ms-lg-2 ps-lg-2 border-start border-secondary border-opacity-50">
+              <span class="badge {% if session.get('role') == 'admin' %}badge-role-admin{% else %}badge-role-client{% endif %} d-flex align-items-center gap-1 font-mono">
+                <i class="bi bi-person-check-fill"></i> {{ session.get('user')|upper }}
+              </span>
+              <a href="{{ url_for('logout') }}" class="btn btn-outline-danger btn-sm py-1 px-2 d-flex align-items-center gap-1 font-mono" style="font-size: 0.78rem;" title="Terminate Session">
+                <i class="bi bi-power"></i> Logout
+              </a>
+            </div>
+          {% else %}
+            {% if request.endpoint != 'login' %}
+              <a href="{{ url_for('login') }}" class="btn btn-outline-info btn-sm py-1 px-3 font-mono" style="font-size: 0.8rem;">
+                <i class="bi bi-box-arrow-in-right me-1"></i> Login
+              </a>
+            {% endif %}
+          {% endif %}
+        </div>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Flash Messages Alert Bar -->
+  <div class="container-fluid px-4 mt-3">
+    {% with messages = get_flashed_messages(with_categories=true) %}
+      {% if messages %}
+        {% for category, message in messages %}
+          <div class="alert alert-{{ 'danger' if category in ['error', 'danger'] else (category if category in ['success', 'warning', 'info'] else 'primary') }} alert-dismissible fade show card-cyber py-2 px-3 border-opacity-50" role="alert">
+            <div class="d-flex align-items-center gap-2">
+              <i class="bi bi-{{ 'exclamation-octagon-fill' if category in ['error', 'danger'] else ('check-circle-fill' if category == 'success' else ('exclamation-triangle-fill' if category == 'warning' else 'info-circle-fill')) }}"></i>
+              <div class="small fw-semibold">{{ message }}</div>
+            </div>
+            <button type="button" class="btn-close btn-close-white" data-bs-dismiss="alert" aria-label="Close" style="padding: 0.75rem;"></button>
+          </div>
+        {% endfor %}
+      {% endif %}
+    {% endwith %}
+  </div>
+
+  <!-- Main Body Content -->
+  <main class="container-fluid px-4 py-3 flex-grow-1">
+    {% block content %}{% endblock %}
+  </main>
+
+  <!-- Tactical Footer -->
+  <footer class="mt-auto py-3 border-top border-secondary border-opacity-25" style="background: rgba(8, 13, 24, 0.95);">
+    <div class="container-fluid px-4 d-flex flex-wrap justify-content-between align-items-center text-white small font-mono" style="font-size: 0.78rem;">
+      <div>
+        <strong class="text-white">TRACELOCK</strong> &bull; <span class="text-cyan">Post-Quantum Traitor Tracing System</span> &bull; <span class="text-teal fw-bold">NIST FIPS 204 ML-DSA</span>
+      </div>
+      <div>
+        <span class="text-white">AES-256-GCM &bull; PyMuPDF ISO 32000-1 Watermarking &bull; SQLite3 Hash-Chain Ledger</span>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Local Bootstrap JS -->
+  <script src="{{ url_for('static', filename='js/bootstrap.bundle.min.js') }}"></script>
+  
+  <script>
+    function copyToClipboard(text, btnElement) {
+      navigator.clipboard.writeText(text).then(() => {
+        const originalText = btnElement.innerHTML;
+        btnElement.innerHTML = '✓ Copied';
+        btnElement.classList.add('text-success');
+        setTimeout(() => {
+          btnElement.innerHTML = originalText;
+          btnElement.classList.remove('text-success');
+        }, 1500);
+      });
+    }
+  </script>
+  {% block extra_scripts %}{% endblock %}
+</body>
+</html>

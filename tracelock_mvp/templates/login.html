@@ -1,0 +1,112 @@
+{% extends "base.html" %}
+
+{% block title %}Access Control Terminal - TraceLock{% endblock %}
+
+{% block content %}
+<div class="login-container">
+  <div class="card card-cyber">
+    <!-- Terminal Header Bar -->
+    <div class="login-header-terminal">
+      <div class="terminal-dots">
+        <span class="terminal-dot dot-red"></span>
+        <span class="terminal-dot dot-yellow"></span>
+        <span class="terminal-dot dot-green"></span>
+      </div>
+      <span class="font-mono text-cyan small" style="font-size: 0.76rem; letter-spacing: 1px; font-weight: 700;">
+        SECURE TERMINAL // ZERO-TRUST GATEWAY
+      </span>
+      <span class="pulse-dot-green"></span>
+    </div>
+
+    <div class="card-body p-4">
+      <div class="text-center mb-4">
+        <div class="fs-1 text-cyan mb-2">
+          <i class="bi bi-shield-lock-fill" style="color: var(--neon-cyan); text-shadow: 0 0 16px rgba(0,242,254,0.7);"></i>
+        </div>
+        <h4 class="text-white fw-bold mb-1 tracking-wide">TRACELOCK DEFENSE ACCESS</h4>
+        <p class="text-cyan small mb-0 fw-semibold">Air-Gapped Post-Quantum Document Sharing Perimeter</p>
+      </div>
+
+      <!-- Authentication Form -->
+      <form action="{{ url_for('login') }}" method="POST" id="loginForm">
+        <div class="mb-3">
+          <label class="form-label-cyber">Operator Identifier / Username</label>
+          <div class="input-group">
+            <span class="input-group-text bg-dark border-secondary border-opacity-50 text-cyan">
+              <i class="bi bi-person-fill"></i>
+            </span>
+            <input type="text" name="username" id="usernameInput" class="form-control form-control-cyber" placeholder="Enter username (e.g. admin, alice)" required autofocus>
+          </div>
+        </div>
+
+        <div class="mb-4">
+          <label class="form-label-cyber">Cryptographic Passphrase / Password</label>
+          <div class="input-group">
+            <span class="input-group-text bg-dark border-secondary border-opacity-50 text-cyan">
+              <i class="bi bi-key-fill"></i>
+            </span>
+            <input type="password" name="password" id="passwordInput" class="form-control form-control-cyber" placeholder="Enter secure passphrase" required>
+          </div>
+        </div>
+
+        <button type="submit" class="btn btn-cyan w-100 py-2 mb-3">
+          <i class="bi bi-box-arrow-in-right me-1"></i> Authenticate Credentials ➔
+        </button>
+      </form>
+
+      <!-- Quick Demo Access Credentials -->
+      <div class="p-3 rounded border border-secondary border-opacity-35 bg-dark mt-3">
+        <div class="d-flex justify-content-between align-items-center mb-2">
+          <span class="text-white small fw-bold font-mono">
+            <i class="bi bi-lightning-charge-fill text-warning me-1"></i> Quick Demo Access
+          </span>
+          <span class="badge bg-secondary font-mono text-white fw-bold" style="font-size: 0.68rem;">MVP Testing</span>
+        </div>
+        <p class="text-white small mb-3" style="font-size: 0.8rem;">
+          Click an authorized profile below to autofill mock credentials:
+        </p>
+
+        <div class="d-flex flex-column gap-2">
+          <button type="button" class="quick-auth-btn" onclick="quickFill('admin', 'admin123')">
+            <div class="d-flex justify-content-between align-items-center">
+              <div>
+                <strong class="text-white"><i class="bi bi-shield-fill text-purple me-1"></i> Admin Authority</strong>
+                <span class="text-cyan small fw-bold"> (admin / admin123)</span>
+              </div>
+              <span class="badge badge-role badge-role-admin">Admin Role</span>
+            </div>
+            <div class="small text-white mt-1" style="font-size: 0.76rem; font-weight: 500;">Full Vault & Hash-Chain Ledger Clearance</div>
+          </button>
+
+          <button type="button" class="quick-auth-btn" onclick="quickFill('alice', 'alice123')">
+            <div class="d-flex justify-content-between align-items-center">
+              <div>
+                <strong class="text-white"><i class="bi bi-person-fill text-cyan me-1"></i> Alice (Client Agent)</strong>
+                <span class="text-teal small fw-bold"> (alice / alice123)</span>
+              </div>
+              <span class="badge badge-role badge-role-client">Client Role</span>
+            </div>
+            <div class="small text-white mt-1" style="font-size: 0.76rem; font-weight: 500;">Local Keystore Decryption Terminal</div>
+          </button>
+        </div>
+      </div>
+
+      <div class="mt-3 text-center">
+        <span class="font-mono text-white" style="font-size: 0.76rem; font-weight: 500;">
+          <i class="bi bi-lock-fill text-teal me-1"></i> Offline Local Keystore &bull; Zero External Network Calls
+        </span>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}
+
+{% block extra_scripts %}
+<script>
+function quickFill(user, pass) {
+  document.getElementById('usernameInput').value = user;
+  document.getElementById('passwordInput').value = pass;
+  document.getElementById('loginForm').submit();
+}
+</script>
+{% endblock %}

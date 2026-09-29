@@ -1,0 +1,221 @@
+{% extends "base.html" %}
+
+{% block title %}Forensics Extractor & Traitor Tracing - TraceLock{% endblock %}
+
+{% block content %}
+<div class="row g-4 mb-4">
+  <!-- Investigation Upload Panel -->
+  <div class="col-lg-5">
+    <div class="card card-cyber h-100">
+      <div class="card-header card-header-cyber d-flex justify-content-between align-items-center">
+        <h5 class="mb-0 text-white fs-6 fw-bold">
+          <i class="bi bi-search text-cyan me-2"></i>Forensic Extraction Scanner
+        </h5>
+        <span class="badge bg-danger bg-opacity-25 text-danger border border-danger border-opacity-50 font-mono" style="font-size: 0.74rem; font-weight: 700;">
+          TRAITOR TRACING ENGINE
+        </span>
+      </div>
+      <div class="card-body">
+        <p class="text-white small mb-3">
+          Upload any suspect or leaked PDF discovered outside the air-gapped perimeter.
+          TraceLock will perform deep steganographic analysis across invisible text layers,
+          extract covert session watermarks, query the offline hash-chain ledger, and mathematically 
+          verify the Post-Quantum digital signature.
+        </p>
+
+        <form action="{{ url_for('forensics_page') }}" method="POST" enctype="multipart/form-data">
+          <div class="mb-3">
+            <label class="form-label-cyber">Upload Suspect / Leaked PDF</label>
+            <input type="file" name="leaked_pdf" class="form-control form-control-cyber" accept=".pdf" required>
+            <div class="form-text text-cyan small font-mono mt-2" style="font-size: 0.76rem; font-weight: 600;">
+              <i class="bi bi-info-circle me-1"></i>Test using the watermarked PDF downloaded from Alice's <strong>Client Terminal</strong>!
+            </div>
+          </div>
+
+          <button type="submit" class="btn btn-purple w-100 py-2 font-mono">
+            <i class="bi bi-fingerprint me-1"></i> Extract Watermark & Trace Culprit ➔
+          </button>
+        </form>
+
+        <hr class="border-secondary my-4">
+
+        <h6 class="text-cyan small fw-bold mb-2 font-mono">
+          <i class="bi bi-shield-check text-teal me-1"></i> THREE-TIER FORENSIC GUARANTEE
+        </h6>
+        <div class="small text-white font-mono" style="font-size: 0.78rem; line-height: 1.7;">
+          <div class="d-flex align-items-start gap-2 mb-2">
+            <i class="bi bi-1-circle text-cyan mt-1"></i>
+            <div><strong class="text-cyan">Covert Stego Extraction:</strong> ISO 32000-1 invisible text rendering (`3 Tr`) & document dictionary metadata.</div>
+          </div>
+          <div class="d-flex align-items-start gap-2 mb-2">
+            <i class="bi bi-2-circle text-cyan mt-1"></i>
+            <div><strong class="text-cyan">PQC Signature Verification:</strong> Mathematically verified using client's Post-Quantum public key.</div>
+          </div>
+          <div class="d-flex align-items-start gap-2">
+            <i class="bi bi-3-circle text-cyan mt-1"></i>
+            <div><strong class="text-cyan">Hash-Chain Anchor:</strong> Corroborated against the immutable SQLite block linked to Genesis.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Forensic Audit Report Panel -->
+  <div class="col-lg-7">
+    <div class="card card-cyber h-100">
+      <div class="card-header card-header-cyber d-flex justify-content-between align-items-center">
+        <h5 class="mb-0 text-white fs-6 fw-bold">
+          <i class="bi bi-file-earmark-medical-fill text-warning me-2"></i>Forensic Investigation Dossier
+        </h5>
+        {% if report %}
+          {% if report.success and report.signature_valid %}
+            <span class="breach-tag">LEAK ATTRIBUTED</span>
+          {% else %}
+            <span class="badge bg-secondary font-mono text-white">INSPECTION COMPLETE</span>
+          {% endif %}
+        {% else %}
+          <span class="badge bg-dark text-cyan border border-secondary font-mono" style="font-size: 0.74rem; font-weight: 600;">AWAITING EVIDENCE</span>
+        {% endif %}
+      </div>
+
+      <div class="card-body">
+        {% if report %}
+          {% if report.success and report.signature_valid %}
+            
+            <!-- DRAMATIC GLOWING BREACH ALERT BANNER -->
+            <div class="forensic-breach-banner mb-4">
+              <div class="d-flex align-items-center gap-3">
+                <div class="pulse-dot-red fs-2 d-none d-sm-block"></div>
+                <div class="flex-grow-1">
+                  <div class="d-flex align-items-center gap-2 mb-2">
+                    <span class="breach-tag">
+                      <i class="bi bi-exclamation-triangle-fill me-1"></i> SECURITY BREACH DETECTED
+                    </span>
+                    <span class="badge bg-dark text-white border border-danger font-mono" style="font-size: 0.74rem;">
+                      CONFIDENCE: 100% MATHEMATICAL PROOF
+                    </span>
+                  </div>
+                  
+                  <div class="text-uppercase small fw-bold text-danger font-mono mb-1" style="letter-spacing: 1px;">
+                    UNAUTHORIZED DISSEMINATION TRACED TO OPERATOR:
+                  </div>
+                  <div class="breach-culprit-name">
+                    {{ report.user_id|upper }}
+                  </div>
+                  <div class="text-white small font-mono mt-1 fw-semibold">
+                    Decryption Event Timestamp: <span class="text-cyan">{{ report.timestamp }}</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Cryptographic Verification Seal -->
+            <div class="cryptographic-seal mb-4">
+              <div class="d-flex justify-content-between align-items-center mb-2">
+                <span class="fw-bold text-teal font-mono d-flex align-items-center gap-2">
+                  <i class="bi bi-patch-check-fill fs-5 text-teal"></i>
+                  POST-QUANTUM DIGITAL SIGNATURE VERIFIED
+                </span>
+                <span class="badge badge-pqc">{{ report.pqc_algorithm }}</span>
+              </div>
+              <p class="small text-white mb-2 font-mono" style="font-size: 0.8rem; line-height: 1.6;">
+                The decryption event binding <code class="text-cyan">SHA256(FileHash + Session_ID + Timestamp)</code> 
+                was signed by <strong class="text-warning">{{ report.user_id }}'s</strong> local Post-Quantum secret key and validated against 
+                their public key in the offline ledger. Non-repudiation is guaranteed under NIST FIPS 204 lattice hardness.
+              </p>
+              
+              <div class="row g-2 mt-1">
+                <div class="col-sm-6">
+                  <div class="d-flex justify-content-between align-items-center mb-1">
+                    <span class="text-cyan small font-mono fw-bold">Public Key (Enrolled):</span>
+                    <button class="btn-copy" onclick="copyToClipboard('{{ report.public_key }}', this)">copy</button>
+                  </div>
+                  <div class="mono-box text-white" style="font-size: 0.74rem; max-height: 50px; overflow-y: auto;">
+                    {{ report.public_key }}
+                  </div>
+                </div>
+                <div class="col-sm-6">
+                  <div class="d-flex justify-content-between align-items-center mb-1">
+                    <span class="text-purple small font-mono fw-bold">PQC Signature:</span>
+                    <button class="btn-copy" onclick="copyToClipboard('{{ report.pqc_signature }}', this)">copy</button>
+                  </div>
+                  <div class="mono-box" style="font-size: 0.74rem; max-height: 50px; overflow-y: auto; color: var(--neon-purple) !important;">
+                    {{ report.pqc_signature }}
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Forensic Evidence Details -->
+            <div class="row g-3 mb-3">
+              <div class="col-sm-6">
+                <label class="form-label-cyber">Extracted Session Identifier</label>
+                <div class="mono-box text-amber font-mono" style="font-size: 0.82rem; font-weight: 600;">
+                  {{ report.session_id }}
+                </div>
+              </div>
+              <div class="col-sm-6">
+                <label class="form-label-cyber">Document Name</label>
+                <div class="mono-box text-white font-mono" style="font-size: 0.82rem; font-weight: 600;">
+                  {{ report.document_name }}
+                </div>
+              </div>
+              <div class="col-sm-12">
+                <label class="form-label-cyber">Steganographic Detection Layers Found</label>
+                <div class="d-flex gap-2 flex-wrap">
+                  {% for layer in report.detection_layers %}
+                    <span class="badge bg-info bg-opacity-25 text-cyan border border-info border-opacity-50 font-mono" style="font-weight: 600;">
+                      <i class="bi bi-check2"></i> {{ layer }}
+                    </span>
+                  {% endfor %}
+                </div>
+              </div>
+            </div>
+
+            <!-- Ledger Block Anchor -->
+            <div class="p-3 rounded border border-secondary border-opacity-35 bg-dark">
+              <div class="d-flex justify-content-between align-items-center mb-2">
+                <span class="fw-bold text-cyan small font-mono">
+                  <i class="bi bi-link-45deg me-1"></i> IMMUTABLE HASH-CHAIN ANCHOR
+                </span>
+                <span class="badge bg-secondary font-mono text-white fw-bold">Ledger Block #{{ report.ledger_block_id }}</span>
+              </div>
+              <div class="row g-2 small font-mono">
+                <div class="col-sm-6">
+                  <span class="text-white" style="font-size: 0.76rem; font-weight: 600;">Previous Block Hash:</span>
+                  <div class="mono-hash-prev d-block text-truncate mt-1">{{ report.previous_hash }}</div>
+                </div>
+                <div class="col-sm-6">
+                  <span class="text-white" style="font-size: 0.76rem; font-weight: 600;">Current Block Hash:</span>
+                  <div class="mono-hash-curr d-block text-truncate mt-1">{{ report.current_hash }}</div>
+                </div>
+              </div>
+            </div>
+
+          {% elif report.error %}
+            <!-- Negative / Error Notification -->
+            <div class="p-4 rounded border border-danger border-opacity-50 bg-danger bg-opacity-15 mb-3 text-center">
+              <i class="bi bi-shield-x display-4 text-danger d-block mb-2"></i>
+              <h5 class="text-white fw-bold">Forensic Analysis Inconclusive</h5>
+              <p class="text-white small mb-0 font-mono mt-2" style="font-size: 0.85rem;">{{ report.error }}</p>
+            </div>
+            <p class="text-white small font-mono text-center">
+              Verify that the uploaded document was decrypted via an authorized TraceLock terminal.
+              Standard unwatermarked PDFs contain zero covert session tags.
+            </p>
+          {% endif %}
+        {% else %}
+          <!-- Awaiting State -->
+          <div class="text-center py-5">
+            <i class="bi bi-fingerprint display-2 d-block mb-3 text-cyan opacity-50"></i>
+            <h5 class="text-white fw-bold">No Evidence Currently Under Inspection</h5>
+            <p class="small text-white mb-0 font-mono mt-2">
+              Upload a suspect PDF file in the scanner panel to trigger deep steganographic and cryptographic tracing.
+            </p>
+          </div>
+        {% endif %}
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}
